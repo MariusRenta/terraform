@@ -85,6 +85,9 @@ PS D:\terraform\repo\terraform> terraform state list
 azurerm_resource_group.rg
 PS D:\terraform\repo\terraform>
 
+![image](https://github.com/MariusRenta/terraform/assets/40556232/da5ad98b-e509-4ba1-afe0-ccd67f3df2a5)
+
+
 PS D:\terraform\repo\terraform> terraform destroy
 azurerm_resource_group.rg: Refreshing state... [id=/subscriptions/***/resourceGroups/RentaResourceGroup]
 
