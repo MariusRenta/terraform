@@ -23,6 +23,10 @@ The terraform.tfvars file contains the actual values for the input variables def
 vm_count = 2
 admin_username = "myadminuser"
 
+![image](https://github.com/MariusRenta/terraform/assets/40556232/78e9f203-c94d-417a-bc11-2bed4c3959cd)
+
+
+
 4. output.tf
 The output.tf file defines the output values to be displayed after the Terraform apply operation. This may include important information such as IP addresses of the provisioned virtual machines. An example output definition is:
 
