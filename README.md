@@ -30,5 +30,6 @@ The output.tf file defines the output values to be displayed after the Terraform
 output "ping_results" {
   value = azurerm_virtual_machine.renta_vm.*.private_ip_address
 }
+![image](https://github.com/MariusRenta/terraform/assets/40556232/8982f3ec-c73b-4f3e-b2f1-894fe1c35ba7)
 
 I acknowledge the need for the virtual machines to communicate with each other. However, due to time constraints, I haven't had the opportunity to explore the process of creating a provisioning script to execute the ping command between them after they are created.
