@@ -40,4 +40,4 @@ output "ping_results" {
 
 ![image](https://github.com/MariusRenta/terraform/assets/40556232/8982f3ec-c73b-4f3e-b2f1-894fe1c35ba7)
 
-I acknowledge the need for the virtual machines to communicate with each other. However, due to time constraints, I haven't had the opportunity to explore the process of creating a provisioning script to execute the ping command between them after they are created.
+Given the time constraints and other tasks or responsibilities, I haven't had the opportunity to test the provisioning script to verify the communication between the virtual machines.
