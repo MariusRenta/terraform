@@ -23,6 +23,8 @@ The terraform.tfvars file contains the actual values for the input variables def
 vm_count = 2
 admin_username = "myadminuser"
 
+In the image below are the resources created in Azure after running `terraform apply`.
+
 ![image](https://github.com/MariusRenta/terraform/assets/40556232/78e9f203-c94d-417a-bc11-2bed4c3959cd)
 
 
