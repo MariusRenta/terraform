@@ -45,6 +45,14 @@ resource "azurerm_virtual_machine" "renta_vm" {
   network_interface_ids = [azurerm_network_interface.renta_nic[count.index].id]
   vm_size               = var.vm_flavor
 
+#This provisioner executes a Bash command on the remote Azure virtual machine. It uses the `${azurerm_virtual_machine.renta_vm.*.private_ip_address}` 
+#interpolation to pass the private IP addresses of all created virtual machines as arguments to the Bash command. 
+#Additionally, it utilizes a sudo command to run the provision_ping.sh script with elevated privileges, using the randomly generated password stored in the `RANDOM_PASSWORD` variable.
+provisioner "remote-exec" {
+  inline = [
+    "bash -c 'echo \"$RANDOM_PASSWORD\" | sudo -S /path/to/provision_ping.sh ${azurerm_virtual_machine.renta_vm.*.private_ip_address}'"
+  ]
+}
   storage_image_reference {
     publisher = "Canonical"
     offer     = "0001-com-ubuntu-server-focal"
