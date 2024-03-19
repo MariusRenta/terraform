@@ -4,7 +4,7 @@ Repository for Terraform Infrastructure Deployment of Virtual Machines in Azure
 Terraform Azure Virtual Machine Deployment
 This project utilizes Terraform to deploy virtual machines in Azure. The solution consists of several key files that work together to automate the deployment process.
 
-Solution Overview
+#Solution Overview
 1. main.tf
 The main.tf file contains the main Terraform configuration code. It defines the Azure resources to be provisioned, including virtual machines, networks, and other necessary components. In this file, you'll find resource definitions, such as azurerm_virtual_machine, azurerm_network_interface, and azurerm_resource_group.
 
