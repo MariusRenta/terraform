@@ -50,6 +50,14 @@ resource "azurerm_virtual_machine" "renta_vm" {
     inline = [
       "ssh -i ${var.private_key_path} -o StrictHostKeyChecking=no ${var.admin_username}@${element(azurerm_network_interface.renta_nic.*.private_ip_address, count.index)} 'ping -c 1 ${element(azurerm_network_interface.renta_nic.*.private_ip_address, 0)}'"
     ]
+    
+    connection {
+      type        = "ssh"
+      host        = azurerm_virtual_machine.renta_vm[count.index].private_ip_address
+      user        = var.admin_username
+      private_key = var.private_key_path
+      timeout     = "2m"
+    }
   }
 
   storage_image_reference {
@@ -83,8 +91,13 @@ resource "azurerm_virtual_machine" "renta_vm" {
 
 # Null resource for managing ping results
 resource "null_resource" "ping_between_vms" {
-  depends_on = [azurerm_virtual_machine.renta_vm]
-  # Configurațiile pentru resursa null_resource aici
+  count = var.vm_count
+  triggers = {
+    # Trigger the execution whenever any of the IP addresses of the virtual machines changes
+    vm_private_ip_addresses = azurerm_virtual_machine.renta_vm[*].network_interface_ids
+  }
+
+  # Configurations for the null_resource go here
 }
 
 # Network interfaces
