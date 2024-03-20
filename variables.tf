@@ -13,3 +13,9 @@ variable "admin_username" {
   type        = string
   default     = "myadminuser"
 }
+
+variable "private_key_path" {
+  description = "path to private key SSH"
+  type        = string
+  default     = "/d/terraform/repo/terraform/renta_ssh_key"
+}

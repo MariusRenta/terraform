@@ -45,21 +45,19 @@ resource "azurerm_virtual_machine" "renta_vm" {
   network_interface_ids = [azurerm_network_interface.renta_nic[count.index].id]
   vm_size               = var.vm_flavor
 
-#This provisioner executes a Bash command on the remote Azure virtual machine. It uses the `${azurerm_virtual_machine.renta_vm.*.private_ip_address}` 
-#interpolation to pass the private IP addresses of all created virtual machines as arguments to the Bash command. 
-#Additionally, it utilizes a sudo command to run the provision_ping.sh script with elevated privileges, using the randomly generated password stored in the `RANDOM_PASSWORD` variable.
-provisioner "remote-exec" {
-  inline = [
-    "bash -c 'echo \"$RANDOM_PASSWORD\" | sudo -S /path/to/provision_ping.sh ${azurerm_virtual_machine.renta_vm.*.private_ip_address}'"
-  ]
-}
+  # This provisioner executes a Bash command on the remote Azure virtual machine.
+  provisioner "remote-exec" {
+    inline = [
+      "ssh -i ${var.private_key_path} -o StrictHostKeyChecking=no ${var.admin_username}@${element(azurerm_network_interface.renta_nic.*.private_ip_address, count.index)} 'ping -c 1 ${element(azurerm_network_interface.renta_nic.*.private_ip_address, 0)}'"
+    ]
+  }
+
   storage_image_reference {
     publisher = "Canonical"
     offer     = "0001-com-ubuntu-server-focal"
-    sku       = "20_04-lts-gen2" # SKU-ul pentru Ubuntu Server 20.04 LTS - x64 Gen2
+    sku       = "20_04-lts-gen2"
     version   = "latest"
   }
-
 
   storage_os_disk {
     name              = "osdisk-${count.index}"
@@ -81,6 +79,12 @@ provisioner "remote-exec" {
   tags = {
     environment = "testing"
   }
+}
+
+# Null resource for managing ping results
+resource "null_resource" "ping_between_vms" {
+  depends_on = [azurerm_virtual_machine.renta_vm]
+  # Configurațiile pentru resursa null_resource aici
 }
 
 # Network interfaces
